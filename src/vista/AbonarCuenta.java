@@ -147,8 +147,13 @@ public class AbonarCuenta extends javax.swing.JPanel {
         }
         
         TransaccionController transaccionC = new TransaccionController();
-        double monto = Math.abs(Double.parseDouble(this.txtDinero.getText()));
+        double monto = Double.parseDouble(this.txtDinero.getText());
         String descripcion = this.txtDescripcion.getText();
+        
+        if(monto < 0){
+            JOptionPane.showMessageDialog(this, "El valor a abonar no puede ser negativo");
+            return;
+        }
         
         int insert = transaccionC.insertTransaccion(monto, this.idCuenta, this.saldo, descripcion);
         if(insert == 1){

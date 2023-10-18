@@ -107,9 +107,14 @@ public class RetirarEfectivo extends javax.swing.JPanel {
         
         TransaccionController transaccionC = new TransaccionController();
         
-        double monto = -Math.abs(Double.parseDouble(this.txtDinero.getText()));
+        double monto = Double.parseDouble(this.txtDinero.getText());
         
-        int insert = transaccionC.insertTransaccion(monto, idCuenta, saldo, "Retiro");
+        if(monto < 1){
+            JOptionPane.showMessageDialog(this, "El valor a retirar no puede ser negativo y menor a 1");
+            return;
+        }
+        
+        int insert = transaccionC.insertTransaccion(-monto, idCuenta, saldo, "Retiro");
         
         if(insert == 1){
             JOptionPane.showMessageDialog(this, "No se puede retirar mas del saldo disponible");

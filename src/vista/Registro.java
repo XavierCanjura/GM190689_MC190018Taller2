@@ -6,23 +6,33 @@ package vista;
 
 import controlador.ClienteController;
 import java.awt.Image;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.Cliente;
+import utils.Validations;
 
 /**
  *
  * @author thatsgonzalez
  */
 public class Registro extends javax.swing.JFrame {
-
+    String pinRandom;
     /**
      * Creates new form Registro
      */
     Cliente cliente = null;
+    Validations validation = new Validations();
     
     public Registro() {
         initComponents();
+        
+        Random random = new Random();
+        int pin = random.nextInt(10000);
+        String pinString = String.format("%04d", pin);
+        this.pinRandom = pinString;
+        this.txtPIN.setText(pinString);
+        this.txtPIN.disable();
 
     }
 
@@ -184,7 +194,20 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoginMouseClicked
 
     private void btnLogin1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogin1MouseClicked
-        // TODO add your handling code here:
+        
+        if(validation.isStringEmpty(this.txtNombres.getText())){
+            JOptionPane.showMessageDialog(this, "Ingrese sus nombres");
+            return;
+        }
+        if(validation.isStringEmpty(this.txtApellidos.getText())){
+            JOptionPane.showMessageDialog(this, "Ingrese sus apellidos");
+            return;
+        }
+        if(validation.isStringEmpty(this.txtDUI.getText())){
+            JOptionPane.showMessageDialog(this, "Ingrese su numero de DUI");
+            return;
+        }
+        
         ClienteController clienteC = new ClienteController();
         
         String nombres = this.txtNombres.getText();
